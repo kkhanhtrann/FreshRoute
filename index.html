@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Fresh Route Finder</title>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <!-- Leaflet Sidebar CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-sidebar-v2/css/leaflet-sidebar.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+  <!-- Font Awesome for sidebar -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" href="images/FreshRouteIcon.png" type="image/png">
+</head>
+
+<body>
+  <div id="loader-wrapper">
+    <div class="loader"></div>
+    <div class="loader-text">Fetching Air Quality Data...</div>
+  </div>
+
+  <div id="sidebar" class="leaflet-sidebar collapsed">
+    <div class="leaflet-sidebar-tabs">
+      <ul role="tablist">
+        <li><a href="#legend" role="tab" title="Legend"><i class="fa fa-list"></i><span class="tab-text"></span></a>
+        </li>
+        <li><a href="#route" role="tab" title="Route"><i class="fa fa-route"></i><span class="tab-text">Route</span></a>
+        </li>
+        <li><a href="#tips" role="tab" title="Tips"><i class="fa-solid fa-lightbulb"></i><span
+              class="tab-text">Tips</span></a>
+        </li>
+        <li><a href="#about" role="tab" title="About"><i class="fa fa-info-circle"></i><span
+              class="tab-text"></span></a></li>
+      </ul>
+    </div>
+
+    <div class="leaflet-sidebar-content">
+      <!-- Content of the legend section -->
+      <div class="leaflet-sidebar-pane" id="legend">
+        <h1 class="leaflet-sidebar-header">Air Quality Legend
+          <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+        </h1>
+        <div id="legend-content"></div> <!-- This is where you'll inject content -->
+      </div>
+
+      <!-- Route Section -->
+      <div class="leaflet-sidebar-pane" id="route">
+        <h1 class="leaflet-sidebar-header">Plan a Route
+          <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+        </h1>
+
+        <div class="route-form">
+          <div class="route-row" style="position: relative;">
+            <label for="from-input">From:</label>
+            <input type="text" id="from-input" placeholder="Start location" autocomplete="off" />
+            <button id="fromPin"></button>
+            <div id="from-suggestions" class="suggestions-box"></div>
+          </div>
+
+          <div class="route-row" style="position: relative;">
+            <label for="to-input">To:</label>
+            <input type="text" id="to-input" placeholder="Destination" autocomplete="off" />
+            <button id="toPin"></button>
+            <div id="to-suggestions" class="suggestions-box"></div>
+          </div>
+
+          <div class="route-row">
+            <label for="date-select">Day:</label>
+            <select id="date-select"></select>
+          </div>
+
+          <div class="route-row">
+            <label for="time-select">Time:</label>
+            <select id="time-select"></select>
+          </div>
+
+          <button id="routeBtn">Find Route</button>
+        </div>
+      </div>
+
+      <!-- About Section -->
+      <div class="leaflet-sidebar-pane" id="about">
+        <h1 class="leaflet-sidebar-header">About
+          <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+        </h1>
+        <p><strong>Fresh Route Finder</strong> is a web application developed by <strong>Kaiden Tran</strong> and
+          <strong>Gabriel Min</strong> and <strong>Kai Markley</strong>, undergraduate students at the
+          <strong>University of Utah</strong>. The project
+          is
+          designed to help users in Salt Lake City discover walking routes with cleaner air, based on real-time
+          environmental
+          data.
+        </p>
+        <p>The app uses Leaflet for mapping, incorporates Open-Meteo for weather data, and relies on <strong><span style="color: purple;">PurpleAir</span></strong>
+           sensors for the PM2.5 data set that the predictive model through AWS Sagemaker is trained on.</p>
+        <p>Our goal is to promote healthier, more informed navigation through a blend of geospatial technology,
+          environmental
+          awareness, and machine learning.</p>
+      </div>
+      <!-- Tips Section -->
+      <div class="leaflet-sidebar-pane" id="tips">
+        <h1 class="leaflet-sidebar-header">Tips & FAQ
+          <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+        </h1>
+
+        <h3>💡 Why does air quality matter?</h3>
+        <p>High PM2.5 levels can lead to serious health issues, especially for children, older adults, and people with
+          respiratory conditions.</p>
+
+        <h3>📊 What is PM2.5?</h3>
+        <p>PM2.5 refers to fine particulate matter that is 2.5 micrometers or smaller. It comes from things like vehicle
+          emissions, wildfires, and industrial pollution.</p>
+
+        <h3>🌐 Where does the data come from?</h3>
+        <p>This app uses historical data from PurpleAir sensors and real-time data from Open-Meteo. A future update will
+          include PM2.5 forecasting using AWS SageMaker.</p>
+
+        <h3>🛰️ How often is the data updated?</h3>
+        <p>Sensor data is updated every hour. Forecasting models update hourly or daily. It will be updated more often
+          in the future if we can get more funding.</p>
+
+        <h3>🗺️ Can I switch map styles?</h3>
+        <p>Yes! Use the globe icon at the bottom right to switch between satellite and street view.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="map"></div>
+
+  <!-- Leaflet Library -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet-sidebar-v2/js/leaflet-sidebar.min.js"></script>
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+
+</html>

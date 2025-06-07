@@ -1,0 +1,423 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+/* LOADING ICON */
+/* https: //css-loaders.com/arrow/ */
+#loader-wrapper {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 12px 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  display: none; /* Initially hidden */
+}
+
+.loader {
+  width: 30px;
+  height: 60px;
+  padding-top: 60px;
+  margin: auto;
+  box-sizing: border-box;
+  display: grid;
+  background:
+    linear-gradient(currentColor 0 0) bottom/10px calc(100% - 15px),
+    conic-gradient(from 134deg at top, #0000, currentColor 1deg 90deg, #0000 91deg) top/100% 15px;
+  background-origin: content-box;
+  background-repeat: no-repeat;
+  animation: l10-0 2s infinite;
+}
+
+.loader:before,
+.loader:after {
+  content: "";
+  grid-area: 1/1;
+  background: inherit;
+  background-size: 10px calc(100% - 25px), 100% 25px;
+  animation: l10-1 2s infinite;
+}
+
+.loader:after {
+  background-size: 10px calc(100% - 30px), 100% 30px;
+  animation: l10-2 2s infinite;
+}
+
+@keyframes l10-0 {
+
+  25%,
+  100% {
+    padding-top: 0px;
+  }
+}
+
+@keyframes l10-1 {
+
+  0%,
+  25% {
+    margin: 60px -10px 0;
+  }
+
+  50%,
+  100% {
+    margin: 8px -10px 0;
+  }
+}
+
+@keyframes l10-2 {
+
+  0%,
+  50% {
+    margin: 60px -15px 0;
+  }
+
+  75%,
+  100% {
+    margin: 20px -15px 0;
+  }
+}
+
+.loader-text {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+.location-marker {
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+/* End LOADING ICON */
+
+.location-marker .pulse {
+    background: rgba(51, 136, 255, 0.4);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: pulse 1.5s infinite;
+}
+
+.location-marker .dot {
+    background: #3388ff;
+    border: 2px solid white;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 5px;
+    left: 3px;
+    z-index: 2;
+}
+
+/* AQI Control styling */
+.leaflet-collapsible-legend {
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.3);
+  font-size: 14px;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  width: 303px;
+  max-height: 38px; /* Collapsed height */
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.leaflet-collapsible-legend.expanded {
+  max-height: 720px; /* Expanded height */
+}
+
+.legend-header {
+  padding: 8px 10px;
+  font-weight: bold;
+  background: #f7f7f7;
+  border-bottom: 1px solid #ccc;
+}
+
+.legend-body {
+  padding: 8px 10px;
+}
+
+.leaflet-collapsible-legend.expanded .legend-body {
+  display: block;
+}
+
+.color-checkbox-control {
+  background: white;
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.color-checkbox-control label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.color-box {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+#helpButton:hover {
+  background-color: #beb7b9 !important;  
+}
+/* AQI Control styling */
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+#map {
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Improve sidebar content font and spacing */
+.leaflet-sidebar-content {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.leaflet-sidebar-header {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+#legend-content ul {
+  padding-left: 20px;
+}
+
+#legend-content li {
+  margin-bottom: 8px;
+}
+
+#legend-content li span {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Style for About tab content */
+#about {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Style for Route tab content */
+.route-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 10px;
+}
+
+.route-row {
+  display: flex;
+  gap: 6px;
+  justify-content: space-between;
+}
+
+.route-row label {
+  font-weight: bold;
+  width: 50px;
+}
+
+.route-row input {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#routeBtn {
+  align-self: flex-start;
+  padding: 6px 12px;
+  background-color: #3388ff;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#routeBtn:hover {
+  background-color: #256ad1;
+}
+
+.route-row select{
+  all: unset;
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+.suggestions-box {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.suggestion-item {
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #eee;
+}
+
+.suggestions-box:empty {
+  display: none;
+  border: none;
+}
+
+/*From Pin Button*/
+#fromPin {
+  width: 30px;
+  height: 30px;
+  align-self: flex-start;
+  padding: 2px 2px;
+  background-color: transparent;
+  background-image: url('images/redPin.png');
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#fromPin:hover {
+  background-color: #e7e1e2;
+}
+
+/*To Pin Button*/
+#toPin {
+  width: 30px;
+  height: 30px;
+  align-self: flex-start;
+  padding: 2px 2px;
+  background-color: transparent;
+  background-image: url('images/greenPin.png');
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#toPin:hover {
+  background-color: #e7e1e2;
+}
+
+/* Day night toggle */
+.switchContainer {
+  width: 100%;
+  height: 95px; /* match texture button height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slideButton {
+  background-color: #e2cc07;
+  width: 28px;   /* skinnier width */
+  height: 95px;  /* same height as texture button */
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  transition: 0.3s;
+  border: 3px solid #fff;
+}
+
+.slideButton::before {
+  position: absolute;
+  content: '🔆';
+  font-size: 16px;            /* Controls emoji size */
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 50%;
+  top: 4px;
+  left: 3px;
+  transition: 0.3s;
+  pointer-events: none;       /* So it's not clickable */
+}
+
+.switchContainer input:checked + .slideButton {
+  background-color: #20096d;
+}
+
+.switchContainer input:checked + .slideButton::before {
+  transform: translateY(65px); /* slide vertically halfway */
+  content: '🌙';
+}
+
+.switchContainer input {
+  display: none;
+}
+/* Day night toggle */
+
+/* Texture change button */
+.change-map-texture {
+    font-size: 38px;
+    text-align: center;
+    line-height: 90px;
+    width: 90px;
+    height: 90px;
+    background-color: #fff;
+    padding: 4px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+/* Texture change button */
+
+.leaflet-control-attribution a img {
+  vertical-align: middle;
+  margin-left: 4px;
+}

@@ -72,7 +72,7 @@ As someone living in a city affected by fluctuating air quality and extreme weat
 
 ### Authors & Contributions
 
-- **Khanh Tran** – Project lead, main developer. Implemented weather and air quality integration, routing logic, UI functionality, performance optimization, and overall system architecture.
+- **Khanh Tran** (Kaiden Tran) – Project lead, main developer. Implemented weather and air quality integration, routing logic, UI functionality, performance optimization, and overall system architecture.
 - **Gabriel Min** – Contributed to early concept discussions, designed map styling, wrote documentation, and supported implementation of logic components.
 - **Kai Markley** – Provided helpful UI and feature suggestions during development.
 

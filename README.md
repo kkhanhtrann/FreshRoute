@@ -1,4 +1,5 @@
 # Fresh Route
+🏆 **3rd Place Winner – AWS "A Breath of Fresh Air" AI Hackathon**
 
 A web-based application that helps users find **walking routes in Salt Lake City** based on **air quality**, **temperature**, and **humidity** conditions, prioritizing environmental comfort and health over pure distance or speed.
 
